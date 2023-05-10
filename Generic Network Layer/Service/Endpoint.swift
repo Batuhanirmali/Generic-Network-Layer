@@ -23,9 +23,9 @@ enum HTTPMethod: String {
     case patch = "PATCH"
 }
 
-enum Endpoint: String {
-    case getLocations
-    case getChar
+enum Endpoint {
+    case getLocations(LocationID: String)
+    case getChar(CharacterID: String)
 }
 
 extension Endpoint: EndpointProtocol {
@@ -35,11 +35,11 @@ extension Endpoint: EndpointProtocol {
     
     var path: String {
         switch self {
-            
+
         case .getLocations:
             return "/api/location"
         case .getChar:
-            return "/api/character"
+            return "/api/character/"
         }
     }
     
@@ -60,7 +60,16 @@ extension Endpoint: EndpointProtocol {
         guard var components = URLComponents(string: baseURL) else {
             fatalError("Url Error")
         }
+
         components.path = path
+        
+        if case .getLocations(let id) = self {
+            components.queryItems = [URLQueryItem(name: "page", value: id)]
+        }
+
+        if case .getChar(let CharacterID) = self {
+            components.path = "\(path)\(CharacterID)"
+        }
         
         var request = URLRequest(url: components.url!)
         request.httpMethod = method.rawValue

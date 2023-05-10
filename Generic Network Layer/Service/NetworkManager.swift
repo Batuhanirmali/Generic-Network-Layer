@@ -38,13 +38,13 @@ class NetworkManager {
         task.resume()
     }
     
-    func getLocations(completion: @escaping (Result<LocationModel, Error>) -> Void) {
-        let endpoint = Endpoint.getLocations
+    func getLocations(LocationID: String,completion: @escaping (Result<LocationModel, Error>) -> Void) {
+        let endpoint = Endpoint.getLocations(LocationID: LocationID)
         request(endpoint, completion: completion)
     }
     
-    func getCharacters(completion: @escaping (Result<CharacterModel, Error>) -> Void) {
-        let endpoint = Endpoint.getChar
+    func getCharacters(CharacterID:String ,completion: @escaping (Result<Character, Error>) -> Void) {
+        let endpoint = Endpoint.getChar(CharacterID: CharacterID)
         request(endpoint, completion: completion)
     }
     

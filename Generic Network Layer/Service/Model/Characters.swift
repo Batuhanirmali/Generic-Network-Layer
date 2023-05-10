@@ -7,29 +7,26 @@
 
 import Foundation
 
-struct CharacterModel: Decodable {
-    var results: [CharacterDetail]?
-}
-
-struct CharacterDetail: Decodable {
-    var id: Int?
-    var name: String?
-    var type: String?
-    var origin, location: Location?
-    var image: String?
-    var episode: [String]?
-    var url: String?
-    var created: String?
+struct Character: Decodable {
+    let id: Int
+    let name, status, species, type: String
+    let gender: String
+    let origin: Origin
+    let location: Location
+    let image: String
+    let episode: [String]
+    let url: String
+    let created: String
 }
 
 // MARK: - Location
-struct Location: Codable {
+struct Location: Decodable {
     var name: String?
     var url: String?
 }
 
 // MARK: - Origin
-struct Origin: Codable {
+struct Origin: Decodable {
     var name: String?
     var url: String?
 }

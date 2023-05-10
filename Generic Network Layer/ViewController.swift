@@ -12,16 +12,26 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkManager.shared.getLocations { result in
+        getLocation(page: 4)
+        getMultipleCharacter(id: 7)
+        
+    }
+
+    private func getLocation(page: Int) {
+        NetworkManager.shared.getLocations(LocationID: String(page)) { result in
             switch result {
             case .success(let success):
-                print(success.results ?? "")
+                success.results?.forEach({ location in
+                    print(location.name ?? "")
+                })
             case .failure(let failure):
                 print(failure.localizedDescription)
             }
         }
-        
-        NetworkManager.shared.getCharacters { result in
+    }
+    
+    private func getMultipleCharacter(id: Int) {
+        NetworkManager.shared.getCharacters(CharacterID: String(id)) { result in
             switch result {
             case .success(let success):
                 print(success)
@@ -30,7 +40,5 @@ class ViewController: UIViewController {
             }
         }
     }
-
-
 }
 
